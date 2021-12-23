@@ -1,0 +1,2 @@
+# yelp-store-recommender
+Using the Yelp Fusion API, I made a program that will return the top 10 results based on type of establishment, maximum radius from a specific location, and maximum number of dollar signs you're willing to spend. Additionally, the program can find the shortest distance between two given stores, webscrape menus and pictures if they are available, and recommend a list of 10 new stores based on the given store.
