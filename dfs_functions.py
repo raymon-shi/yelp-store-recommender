@@ -1,4 +1,5 @@
 from yelp_search import *
+from basic_functions import *
 from collections import defaultdict
 
 
@@ -65,7 +66,7 @@ def depth_first_search_visit(graph, current_vertex, current_happiness):
     # currently exploring this vertex
     color_of_vertices[current_vertex] = 1
     # looking at all the neighbors of the current vertex
-    for adj_vertex, happiness_value in graph[current_vertex].items():
+    for adj_vertex, happiness_value in graph[current_node].items():
         # if the color of neighbor is white and has a >= happiness value
         if color_of_vertices[adj_vertex] == 0 and happiness_value >= current_happiness:
             # update the parent pointer

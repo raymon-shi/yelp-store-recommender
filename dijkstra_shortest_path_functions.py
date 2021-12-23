@@ -4,6 +4,7 @@ import heapq as min_heap
 import random
 
 from yelp_search import *
+from basic_functions import *
 
 
 def get_distance_from_to(limited_list, compared_store):
@@ -29,7 +30,7 @@ def get_distances_of_all(yelp_top_list):
             if store['business_id'] != other_store['business_id']:
                 # make a key with store name and value of distance to that store
                 yelp_from_to_store[other_store['name']
-                                   ] = distance_to
+                ] = distance_to
 
         # add that dictionary to the larger dictionary, representing larger dictionary vertex -> vertices of the smaller
         yelp_store_to_store[store['name']] = yelp_from_to_store
@@ -52,10 +53,10 @@ def fixing_none_entries(yelp_sts):
         if None in item.values():
             print('there is a none value at dictionary:', iter)
             for value in item.values():
-                if value != None:
+                if value is not None:
                     sum = sum + value
                 for value in item.values():
-                    if value == None:
+                    if value is None:
                         # once it finds the None value, generate the average of the current distances + some small random value
                         avg = sum / 9.0
                         random_avg = avg + (random.random() / 2.0)
@@ -108,7 +109,7 @@ def dijkstra_shortest_path(graph, source, target):
     shortest_path = list()
 
     # produces the reverse path
-    while current_position != None:
+    while current_position is not None:
         shortest_path.append(current_position)
         previous_position = current_position
         current_position = parents_of_vertices[previous_position]

@@ -36,28 +36,36 @@ def happiness(star_rating, review_number, dollar_amount):
     return (star_rating * 20.0) + (review_number * 0.1) - (dollar_amount * 25.0)
 
 
-##########################################################################
-##########################################################################
-##########################################################################
+def yelp_result_list_maker(results_dict):
+    result_list = list()
+    # sometimes the yelp api decides to return None for some reason, not entirely sure....
+    if 'businesses' in results_dict.keys():
+        # look at all the business attributes
+        for business in results_dict['businesses']:
+            # create a new dictioanry with business details that I find are important
+            results_business_details = {
+                'name': business['name'],
+                'phone_number': business['phone'],
+                'yelp_website': business['url'],
+                'business_id': business['id'],
+                'dollar_amount': business['price'],
+                'star_rating': business['rating'],
+                'review_number': business['review_count'],
+                'location': business['location']['address1'] + ' ' + business['location']['city'] + ' ' +
+                            business['location']['state'] + ' ' + business['location']['zip_code'],
+                'distance': meters_to_miles(float(business['distance'])),
+                'happiness': happiness(float(business['rating']), float(business['review_count']),
+                                       dollar_sign_convert(business['price']))
+            }
+            # add it to a resulting list, creating a list of dictionaries, where each dictionary represents a store
+            result_list.append(results_business_details)
 
-# yelp api keys
-client_id = 'ENTER_CLIENT_ID'
-yelp_api_key = 'ENTER_YELP_API_KEY'
+    return result_list
 
-# in case of emergency, use other keys
-yelp_api_key_2 = ''
-yelp_api_key_3 = ''
+
+##########################################################################
+##########################################################################
+##########################################################################
 
 yelp_businesses_search_url = 'https://api.yelp.com/v3/businesses/search'
 yelp_header = {'Authorization': 'Bearer ' + yelp_api_key}
-
-# important global variables
-term = input('Enter the type of establishment youre looking for: ')
-limit = 10
-radius_in_miles = input(
-    'Enter the furthest distance you are willing to go in miles: ')
-radius_in_meters = miles_to_meters(radius_in_miles)
-location = input('Enter the your location (Address or Zip Code): ')
-price = input(
-    'Enter the maximum dollar sign amount you are willing to spend (max of 4): ')
-price_input_readjusted = dollar_sign_all(price)
